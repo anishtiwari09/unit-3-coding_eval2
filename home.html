@@ -63,13 +63,13 @@
     </div>
 </body>
 <script>
-    const limit=2
+    const limit=10
     let current=1
     let getData=(name)=>{
         return fetch(`https://api.github.com/search/users?q=${name}&per_page=${limit}&page=${current}`).then((res)=>res.json())
         .catch((e)=>console.log(e))
     }
-    const fetchData=async (name)=>{
+    const fetchData=async ()=>{
         try{
             let {items}=await getData(name)
             displayResult(items)
@@ -83,11 +83,12 @@
     const handleSearch=()=>{
         event.preventDefault()
         let form=new FormData(event.target)
-        let name=form.get('search')
-        console.log(name)
-        if(name.length==0)
-        return 
-        fetchData(name)
+        let nameEle=form.get('search')
+        console.log(nameEle)
+        if(nameEle.length==0)
+        return
+        name=nameEle
+        fetchData()
     }
     window.addEventListener('load',()=>{
       let formEle=document.querySelector('form')
@@ -120,6 +121,7 @@
     }
     let navigateButton=()=>{
         let buttons=document.getElementById('buttons')
+        buttons.innerHTML=null
         let previous=document.createElement('button')
         let curr=document.createElement('button')
         let next=document.createElement('button')
@@ -131,7 +133,7 @@
         next.name=current+1
         buttons.append(previous,curr,next)
 
-        if(curr.textContent=='1')
+        if(current==1)
         previous.disabled="true"
         else
         previous.disabled="false"
