@@ -16,6 +16,17 @@
         form > div > input{
             padding:0.5rem;;
         }
+        form + div{
+            text-align: center;
+            margin-top:0.8rem;
+        }
+        .visible{
+            display:block;
+        }
+        .hidden{
+            display:none;
+        }
+
     </style>
     
 </head>
@@ -24,14 +35,46 @@
     <div><input type="password" placeholder="password" name="password"/></div>
     <div><input type="submit" value="login"></div>
 </form>
+<div id="wrong-input" class="hidden">
+    <h2>Invalid Creditional</h2>
+</div>
 <body>
     <script>
-        const handleLogin=()=>{
+
+        const loginDetails=(payload)=>{
+            let config={
+                method:"post",
+                headers:{
+                    'Content-Type':'application/json'
+        
+                },
+                body:JSON.stringify(payload)
+            }
+            return fetch('https://reqres.in/api/login',config).then((res)=>res.json()).catch((e)=>console.log(e))
+        }
+        const handleLogin=async ()=>{
             event.preventDefault()
             let form=new FormData(event.target)
             const email=form.get('email')
             const password=form.get('password')
             console.log(email,password)
+            let indicator=document.getElementById('wrong-input')
+            if(email.length==0||password.length==0)
+            return
+            const payload={
+                email,password
+            }
+            let result=await loginDetails(payload)
+            if(result.error==undefined)
+            {
+                
+                indicator.className="hidden"
+            window.location.replace('home.html')
+            }
+            else
+            {
+                indicator.className="visible"
+            }
         }
         window.addEventListener('load',()=>{
             let formEle=document.getElementById('form-login')
