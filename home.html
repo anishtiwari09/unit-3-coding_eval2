@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home</title>
+    <style>
+        form{
+            text-align: center;
+            margin-top:1rem;
+        }
+        form div{
+            margin-left:0.54rem;
+        }
+        form input{
+            padding:.8rem;
+        }
+        img{
+            width:100px;
+            height:100px;
+        }
+    </style>
+</head>
+<body>
+    <form id="search-input">
+        <div><input type="search" placeholder="Search People" name="search">
+        <input type="submit" value="search">
+        </div>
+    </form>
+    <div id="container"></div>
+</body>
+<script>
+    let getData=(name)=>{
+        return fetch('https://api.github.com/search/users?q=anish').then((res)=>res.json())
+        .catch((e)=>console.log(e))
+    }
+    const fetchData=async (name)=>{
+        try{
+            let result=await getData(name)
+            console.log(result)
+        }
+        catch(e)
+        {
+
+        }
+    }
+    const handleSearch=()=>{
+        event.preventDefault()
+        let form=new FormData(event.target)
+        let name=form.get('search')
+        if(name.length==0)
+        return 
+        fetchData(name)
+    }
+</script>
+</html>
