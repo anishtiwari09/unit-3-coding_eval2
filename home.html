@@ -134,9 +134,9 @@
         buttons.append(previous,curr,next)
 
         if(current==1)
-        previous.disabled="true"
+        previous.disabled=true
         else
-        previous.disabled="false"
+        previous.disabled=false
         previous.addEventListener('click',handlePage)
         curr.addEventListener('click',handlePage)
         next.addEventListener('click',handlePage)
