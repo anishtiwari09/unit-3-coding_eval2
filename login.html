@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <style>
+        form{
+           
+            text-align:center;
+        }
+        form > div{
+            margin-top:0.8rem;
+        }
+        form > div > input{
+            padding:0.5rem;;
+        }
+    </style>
+    
+</head>
+<form id="form-login">
+    <div><input type="email" placeholder="email" name="email"/></div>
+    <div><input type="password" placeholder="password" name="password"/></div>
+    <div><input type="submit" value="login"></div>
+</form>
+<body>
+    <script>
+        const handleLogin=()=>{
+            event.preventDefault()
+            let form=new FormData(event.target)
+            const email=form.get('email')
+            const password=form.get('password')
+            console.log(email,password)
+        }
+        window.addEventListener('load',()=>{
+            let formEle=document.getElementById('form-login')
+            formEle.addEventListener('submit',handleLogin)
+        })
+    </script>
+</body>
+</html>
